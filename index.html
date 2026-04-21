@@ -346,7 +346,7 @@ const app = initializeApp({
   apiKey: "AIzaSyBxBco8Xo9aggvxRNDpzil_9i2aUtiNk-A",
   authDomain: "hif-qatar.firebaseapp.com",
   projectId: "hif-qatar",
-  storageBucket: "hif-qatar.firebasestorage.app",
+  storageBucket: "hif-qatar.appspot.com",
   messagingSenderId: "210773854507",
   appId: "1:210773854507:web:00197813df6a5d960a9d6e"
 });
@@ -467,20 +467,45 @@ window.removeExistingFile=function(i){
   renderExistingFiles(existingAttachments);
 };
 
-// ── Upload a single file to Firebase Storage ──
+// ── Upload a single file — tries Firebase Storage, falls back to base64 ──
 function uploadFile(caseId, file, onProgress){
   return new Promise((resolve,reject)=>{
+    onProgress(10);
     const path=`cases/${caseId}/${Date.now()}_${file.name}`;
     const storageRef=ref(storage,path);
     const task=uploadBytesResumable(storageRef,file);
     task.on('state_changed',
       snap=>{const pct=Math.round((snap.bytesTransferred/snap.totalBytes)*100);onProgress(pct);},
-      reject,
+      async(err)=>{
+        console.error("Storage upload error:",err.code, err.message);
+        // Fallback: store as base64 inside Firestore (works for files ≤ ~900KB)
+        if(file.size > 900000){
+          reject(new Error(`Storage unavailable & file too large for fallback (${fileSize(file.size)}). Please use a file under 900KB or fix Firebase Storage rules.`));
+          return;
+        }
+        try{
+          onProgress(50);
+          const b64 = await fileToBase64(file);
+          onProgress(100);
+          resolve({name:file.name,url:b64,type:file.type,size:file.size,isBase64:true,uploadedAt:new Date().toISOString()});
+        } catch(e2){
+          reject(new Error("Upload failed: "+err.message));
+        }
+      },
       async()=>{
         const url=await getDownloadURL(task.snapshot.ref);
         resolve({name:file.name,url,type:file.type,size:file.size,path,uploadedAt:new Date().toISOString()});
       }
     );
+  });
+}
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=e=>resolve(e.target.result);
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
   });
 }
 
@@ -633,7 +658,7 @@ window.openDetail=function(id){
           <div class="att-name">${a.name}</div>
           <div style="font-size:11px;color:#9CA3AF;">${a.size?fileSize(a.size):''} · ${a.uploadedAt?new Date(a.uploadedAt).toLocaleDateString():''}</div>
         </div>
-        <a href="${a.url}" target="_blank" class="att-link">Open ↗</a>
+        <a href="${a.url}" target="_blank" class="att-link" ${a.isBase64?`download="${a.name}"`:''}>${a.isBase64?'Download ↓':'Open ↗'}</a>
       </div>`).join('');
   go('detail');
 };
