@@ -284,7 +284,7 @@ tr:nth-child(even) td{background:#F9FAFB;}
         <button type="button" onclick="document.getElementById('file-input').click()" style="width:100%;background:#1E3A5F;border:none;color:#fff;padding:12px 16px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
           <span style="font-size:18px;">📎</span> Attach Files
         </button>
-        <div style="font-size:12px;color:#9CA3AF;margin-top:5px;text-align:center;">PDF, images, Word, Excel — any format</div>
+        <div style="font-size:12px;color:#9CA3AF;margin-top:5px;text-align:center;">PDF, images, Word, Excel — max 900KB per file</div>
         <input type="file" id="file-input" multiple style="display:none;" onchange="handleFileSelect(event)"/>
         <!-- Existing files (when editing) -->
         <div id="existing-files"></div>
@@ -339,19 +339,15 @@ tr:nth-child(even) td{background:#F9FAFB;}
 import { initializeApp }           from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, doc, setDoc, onSnapshot, query, orderBy }
                                    from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject }
-                                   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 
 const app = initializeApp({
   apiKey: "AIzaSyBxBco8Xo9aggvxRNDpzil_9i2aUtiNk-A",
   authDomain: "hif-qatar.firebaseapp.com",
   projectId: "hif-qatar",
-  storageBucket: "hif-qatar.appspot.com",
   messagingSenderId: "210773854507",
   appId: "1:210773854507:web:00197813df6a5d960a9d6e"
 });
-const db      = getFirestore(app);
-const storage = getStorage(app);
+const db = getFirestore(app);
 
 // ── Seed ──
 const SEED = [
@@ -467,44 +463,33 @@ window.removeExistingFile=function(i){
   renderExistingFiles(existingAttachments);
 };
 
-// ── Upload a single file — tries Firebase Storage, falls back to base64 ──
+// ── Upload: convert file to base64 and store directly in Firestore ──
 function uploadFile(caseId, file, onProgress){
   return new Promise((resolve,reject)=>{
-    onProgress(10);
-    const path=`cases/${caseId}/${Date.now()}_${file.name}`;
-    const storageRef=ref(storage,path);
-    const task=uploadBytesResumable(storageRef,file);
-    task.on('state_changed',
-      snap=>{const pct=Math.round((snap.bytesTransferred/snap.totalBytes)*100);onProgress(pct);},
-      async(err)=>{
-        console.error("Storage upload error:",err.code, err.message);
-        // Fallback: store as base64 inside Firestore (works for files ≤ ~900KB)
-        if(file.size > 900000){
-          reject(new Error(`Storage unavailable & file too large for fallback (${fileSize(file.size)}). Please use a file under 900KB or fix Firebase Storage rules.`));
-          return;
-        }
-        try{
-          onProgress(50);
-          const b64 = await fileToBase64(file);
-          onProgress(100);
-          resolve({name:file.name,url:b64,type:file.type,size:file.size,isBase64:true,uploadedAt:new Date().toISOString()});
-        } catch(e2){
-          reject(new Error("Upload failed: "+err.message));
-        }
-      },
-      async()=>{
-        const url=await getDownloadURL(task.snapshot.ref);
-        resolve({name:file.name,url,type:file.type,size:file.size,path,uploadedAt:new Date().toISOString()});
+    // Limit: 900KB to stay within Firestore document limits
+    if(file.size > 900000){
+      reject(new Error(`File too large: ${fileSize(file.size)}. Max 900KB per file. Please compress or use smaller files.`));
+      return;
+    }
+    onProgress(20);
+    const reader = new FileReader();
+    reader.onprogress = (e) => {
+      if(e.lengthComputable){
+        onProgress(20 + Math.round((e.loaded/e.total)*70));
       }
-    );
-  });
-}
-
-function fileToBase64(file){
-  return new Promise((resolve,reject)=>{
-    const reader=new FileReader();
-    reader.onload=e=>resolve(e.target.result);
-    reader.onerror=reject;
+    };
+    reader.onload = (e) => {
+      onProgress(100);
+      resolve({
+        name: file.name,
+        url: e.target.result,
+        type: file.type,
+        size: file.size,
+        isBase64: true,
+        uploadedAt: new Date().toISOString()
+      });
+    };
+    reader.onerror = () => reject(new Error("Failed to read file"));
     reader.readAsDataURL(file);
   });
 }
