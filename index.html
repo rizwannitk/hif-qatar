@@ -12,8 +12,6 @@ button{cursor:pointer;}
 input,select,textarea{width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid #D1D5DB;background:#fff;color:#111827;outline:none;appearance:none;-webkit-appearance:none;font-size:16px;}
 input:focus,select:focus,textarea:focus{border-color:#1E3A5F;}
 textarea{resize:vertical;line-height:1.6;}
-
-/* Header */
 header{background:#1E3A5F;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2);}
 .hi{max-width:1300px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:56px;}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
@@ -26,27 +24,18 @@ nav{display:flex;align-items:center;gap:4px;}
 .mob-menu{display:none;background:#163155;border-top:1px solid rgba(255,255,255,.1);padding:8px 0 12px;}
 .mob-menu button{display:block;width:100%;text-align:left;background:none;border:none;color:#fff;padding:13px 20px;font-size:15px;}
 .mob-new{margin:8px 16px 0;width:calc(100% - 32px)!important;background:#10B981!important;border-radius:8px;font-weight:700;}
-
-/* Loading */
 #loading{position:fixed;inset:0;background:#F0F4F8;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
 .spinner{width:38px;height:38px;border:3px solid #E5E7EB;border-top-color:#10B981;border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* Sync bar */
 .ibar{background:#EFF6FF;border-bottom:1px solid #BFDBFE;padding:8px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;}
 .tag{background:#DBEAFE;color:#1D4ED8;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;}
-
 main{max-width:1300px;margin:0 auto;padding:20px 14px 60px;}
 .view{display:none;}.view.on{display:block;}
 .card{background:#fff;border-radius:12px;padding:20px 16px;box-shadow:0 1px 8px rgba(0,0,0,.07);border:1px solid #E5E7EB;}
 .sec{font-size:11px;font-weight:700;color:#1E3A5F;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #EFF6FF;}
-
-/* Stats */
 .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:20px;}
 .sc{background:#fff;border-radius:10px;padding:14px 10px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #E5E7EB;}
 .sv{font-size:28px;font-weight:800;line-height:1;}.sl{font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;}
-
-/* Panels */
 .panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;}
 .cat-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .cb{flex:1;height:7px;background:#F3F4F6;border-radius:4px;overflow:hidden;}
@@ -54,8 +43,6 @@ main{max-width:1300px;margin:0 auto;padding:20px 14px 60px;}
 .rr{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #F3F4F6;cursor:pointer;}
 .rn{font-size:14px;font-weight:600;color:#111827;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px;}
 .rm{font-size:11px;color:#9CA3AF;font-family:monospace;margin-top:1px;}
-
-/* List */
 .phdr{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
 .pt{font-size:22px;font-weight:700;color:#1E3A5F;margin-bottom:2px;}.ps{color:#6B7280;font-size:13px;}
 .filters{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
@@ -73,8 +60,6 @@ tr:nth-child(even) td{background:#F9FAFB;}
 .dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
 .abtn{background:#EFF6FF;border:none;color:#1E3A5F;padding:5px 10px;border-radius:6px;font-size:12px;font-weight:600;}
 .ebtn{background:#ECFDF5;color:#065F46;}
-
-/* Form */
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;}
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:5px;}
@@ -87,36 +72,57 @@ tr:nth-child(even) td{background:#F9FAFB;}
 .btn-cancel{background:#fff;border:1px solid #D1D5DB;color:#374151;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600;}
 .btn-save{background:#10B981;border:none;color:#fff;padding:12px 0;border-radius:8px;font-size:15px;font-weight:700;flex:1 1 180px;max-width:220px;}
 .btn-back{background:#fff;border:1px solid #D1D5DB;color:#374151;padding:9px 14px;border-radius:8px;font-size:14px;font-weight:600;}
-
-/* Detail */
 .dr{display:flex;padding:9px 0;border-bottom:1px solid #F3F4F6;align-items:flex-start;gap:8px;}
 .dl{width:110px;font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.4px;flex-shrink:0;padding-top:2px;}
 .dv{font-size:14px;color:#111827;word-break:break-word;}
 .dbox{font-size:14px;color:#374151;line-height:1.7;padding:12px;background:#F9FAFB;border-radius:8px;border:1px solid #E5E7EB;margin-top:6px;}
 
-/* Overlay */
+/* File upload */
+.file-drop{border:2px dashed #D1D5DB;border-radius:10px;padding:20px;text-align:center;cursor:pointer;background:#FAFAFA;transition:border .15s,background .15s;}
+.file-drop:hover{border-color:#10B981;background:#F0FDF4;}
+.file-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#F9FAFB;border-radius:6px;margin-top:6px;border:1px solid #E5E7EB;font-size:13px;}
+.file-item .fname{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#374151;}
+.file-item .fsize{font-size:11px;color:#9CA3AF;flex-shrink:0;}
+.file-del{background:none;border:none;color:#EF4444;font-size:15px;padding:2px;cursor:pointer;flex-shrink:0;}
+.file-prog{width:100%;height:4px;background:#E5E7EB;border-radius:2px;margin-top:4px;overflow:hidden;}
+.file-prog-bar{height:100%;background:#10B981;border-radius:2px;transition:width .3s;}
+
+/* Upload progress in overlay */
+.upload-detail{font-size:13px;color:#6B7280;margin-top:4px;}
+.prog-wrap{width:200px;height:6px;background:#E5E7EB;border-radius:3px;margin-top:8px;}
+.prog-bar{height:100%;background:#10B981;border-radius:3px;transition:width .2s;}
+
+/* Attachment in detail view */
+.att-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#F9FAFB;border-radius:8px;margin-bottom:6px;border:1px solid #E5E7EB;}
+.att-icon{font-size:20px;flex-shrink:0;}
+.att-name{flex:1;font-size:13px;font-weight:600;color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.att-meta{font-size:11px;color:#9CA3AF;flex-shrink:0;}
+.att-link{background:#1E3A5F;border:none;color:#fff;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap;}
+
 #overlay{position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:998;display:none;align-items:center;justify-content:center;}
 #overlay.show{display:flex;}
-.ovr-box{background:#fff;padding:24px 32px;border-radius:12px;font-weight:700;color:#1E3A5F;font-size:15px;box-shadow:0 4px 20px rgba(0,0,0,.15);display:flex;align-items:center;gap:12px;}
-
-#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;color:#fff;padding:12px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,.25);display:none;white-space:nowrap;max-width:90vw;text-align:center;}
-
-/* Error banner */
+.ovr-box{background:#fff;padding:24px 32px;border-radius:12px;color:#1E3A5F;font-size:15px;box-shadow:0 4px 20px rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;gap:10px;min-width:220px;}
+.ovr-title{font-weight:700;font-size:15px;}
 #errbanner{display:none;background:#FEE2E2;border-bottom:2px solid #EF4444;padding:12px 16px;}
 .einner{max-width:1300px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-
-@media(max-width:620px){
-  nav{display:none;}.mob-btn{display:block;}
-  .frow{grid-template-columns:1fr;}
-}
+#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;color:#fff;padding:12px 24px;border-radius:10px;font-weight:600;font-size:14px;box-shadow:0 4px 20px rgba(0,0,0,.25);display:none;white-space:nowrap;max-width:90vw;text-align:center;}
+@media(max-width:620px){nav{display:none;}.mob-btn{display:block;}.frow{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <div id="toast"></div>
-<div id="overlay"><div class="ovr-box"><div class="spinner"></div><span id="ovr-msg">Saving...</span></div></div>
+<div id="overlay">
+  <div class="ovr-box">
+    <div class="spinner"></div>
+    <div class="ovr-title" id="ovr-msg">Saving…</div>
+    <div class="upload-detail" id="ovr-detail"></div>
+    <div class="prog-wrap" id="ovr-prog-wrap" style="display:none;">
+      <div class="prog-bar" id="ovr-prog" style="width:0%"></div>
+    </div>
+  </div>
+</div>
 
-<!-- LOADING -->
 <div id="loading">
   <div style="width:48px;height:48px;background:linear-gradient(135deg,#10B981,#059669);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;">☽</div>
   <div style="color:#1E3A5F;font-weight:700;font-size:17px;">HIF Qatar</div>
@@ -124,7 +130,6 @@ tr:nth-child(even) td{background:#F9FAFB;}
   <div style="color:#9CA3AF;font-size:13px;" id="load-msg">Connecting to database…</div>
 </div>
 
-<!-- ERROR -->
 <div id="errbanner">
   <div class="einner">
     <span style="font-weight:700;color:#991B1B;" id="err-msg"></span>
@@ -132,7 +137,6 @@ tr:nth-child(even) td{background:#F9FAFB;}
   </div>
 </div>
 
-<!-- HEADER -->
 <header>
   <div class="hi">
     <div class="logo" onclick="go('dash')">
@@ -156,7 +160,6 @@ tr:nth-child(even) td{background:#F9FAFB;}
   </div>
 </header>
 
-<!-- SYNC BAR -->
 <div class="ibar" id="ibar" style="display:none;">
   <span style="font-weight:600;color:#1D4ED8;">🟢 Live — Firebase</span>
   <span class="tag" id="sync-info"></span>
@@ -195,7 +198,7 @@ tr:nth-child(even) td{background:#F9FAFB;}
     <table>
       <thead><tr>
         <th>Case ID</th><th>Beneficiary</th><th>Location</th><th>Reported By</th>
-        <th>Date</th><th>Category</th><th>Support Type</th><th>Status</th><th>Amount</th><th>Actions</th>
+        <th>Date</th><th>Category</th><th>Support Type</th><th>Status</th><th>Amount</th><th>Docs</th><th>Actions</th>
       </tr></thead>
       <tbody id="tbody"></tbody>
     </table>
@@ -209,6 +212,7 @@ tr:nth-child(even) td{background:#F9FAFB;}
     <div><div class="pt" id="form-title">New Case</div><div class="ps" id="form-sub">Register a new beneficiary case</div></div>
   </div>
   <div class="grid2">
+    <!-- Card 1: Beneficiary -->
     <div class="card">
       <div class="sec">Beneficiary Information</div>
       <div class="field" id="f-id" style="display:none;">
@@ -240,6 +244,7 @@ tr:nth-child(even) td{background:#F9FAFB;}
         <textarea id="inp-desc" rows="5" placeholder="Describe the case..."></textarea>
       </div>
     </div>
+    <!-- Card 2: Case Details + Files -->
     <div class="card">
       <div class="sec">Case Details</div>
       <div class="field">
@@ -270,13 +275,28 @@ tr:nth-child(even) td{background:#F9FAFB;}
       </div>
       <div class="field">
         <label>Remarks</label>
-        <textarea id="inp-rem" rows="4" placeholder="Notes, decisions, follow-up..."></textarea>
+        <textarea id="inp-rem" rows="3" placeholder="Notes, decisions, follow-up..."></textarea>
+      </div>
+
+      <!-- File Upload -->
+      <div class="field">
+        <label>Attachments</label>
+        <div class="file-drop" onclick="document.getElementById('file-input').click()">
+          <div style="font-size:28px;margin-bottom:6px;">📎</div>
+          <div style="font-size:14px;font-weight:600;color:#374151;">Tap to attach files</div>
+          <div style="font-size:12px;color:#9CA3AF;margin-top:3px;">PDF, images, Word, Excel — any format</div>
+        </div>
+        <input type="file" id="file-input" multiple style="display:none;" onchange="handleFileSelect(event)"/>
+        <!-- Existing files (when editing) -->
+        <div id="existing-files"></div>
+        <!-- New files queued -->
+        <div id="new-files"></div>
       </div>
     </div>
   </div>
   <div class="form-actions">
     <button class="btn-cancel" onclick="go('list')">Cancel</button>
-    <button class="btn-save" id="save-btn" onclick="handleSave()">✓ Create Case</button>
+    <button class="btn-save" id="save-btn" onclick="handleSave()">✓  Create Case</button>
   </div>
 </div>
 
@@ -304,6 +324,11 @@ tr:nth-child(even) td{background:#F9FAFB;}
         <div style="height:1px;background:#F3F4F6;margin:14px 0;"></div>
         <div class="sec">Remarks</div><div class="dbox" id="d-rem"></div>
       </div>
+      <div style="height:1px;background:#F3F4F6;margin:14px 0;"></div>
+      <div class="sec" id="d-att-title">Attachments (0)</div>
+      <div id="d-attachments">
+        <div style="color:#9CA3AF;font-size:14px;padding:8px 0;">No attachments</div>
+      </div>
     </div>
   </div>
 </div>
@@ -312,11 +337,12 @@ tr:nth-child(even) td{background:#F9FAFB;}
 
 <!-- Firebase SDK -->
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { initializeApp }           from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, doc, setDoc, onSnapshot, query, orderBy }
-  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+                                   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject }
+                                   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
 
-// ── Firebase config ──
 const app = initializeApp({
   apiKey: "AIzaSyBxBco8Xo9aggvxRNDpzil_9i2aUtiNk-A",
   authDomain: "hif-qatar.firebaseapp.com",
@@ -325,43 +351,64 @@ const app = initializeApp({
   messagingSenderId: "210773854507",
   appId: "1:210773854507:web:00197813df6a5d960a9d6e"
 });
-const db = getFirestore(app);
+const db      = getFirestore(app);
+const storage = getStorage(app);
 
-// ── Seed data ──
+// ── Seed ──
 const SEED = [
-  {id:"HIF-2026-001",beneficiaryName:"Mr. IBRAHIM",location:"Karaya Janatha Colony, Uppinangady, D.K",reportedBy:"Anshar U.T",dateReported:"2026-02-05",description:"Construction of House roof repair",category:"Social",supportType:"One-time",status:"Closed",currency:"INR",amount:170000,remarks:"Approved amount of 170K INR for reconstruction of House"},
-  {id:"HIF-2026-002",beneficiaryName:"Mr. BASHEER AHMED",location:"KUDRADKA HOUSE, BELTHANGADY Tq, D.K",reportedBy:"Anshar U.T",dateReported:"2026-01-19",description:"Medical Support",category:"Medical",supportType:"Monthly",status:"Active",currency:"INR",amount:1500,remarks:"1500 INR approved from Feb'26 onwards to be managed by Qatar Unit"},
-  {id:"HIF-2026-003",beneficiaryName:"Muneer Mohammed Abdulla",location:"Bangalore",reportedBy:"Shamsheer",dateReported:"2026-02-15",description:"Stroke patient under continuous medical care; unable to work. Sole breadwinner. Support requested for children's education (2nd PU, 9th, 3rd standard).",category:"Education",supportType:"One-time",status:"Closed",currency:"INR",amount:10000,remarks:"10K INR approved as one-time payment"},
-  {id:"HIF-2026-004",beneficiaryName:"Mumtaz",location:"Kakkinge",reportedBy:"HIF Mangalore",dateReported:"2026-03-11",description:"",category:"Social",supportType:"One-time",status:"Active",currency:"INR",amount:250000,remarks:"2.5 Lakh approved under project ashiyana"},
-  {id:"HIF-2026-005",beneficiaryName:"Shahim",location:"Krishanpura",reportedBy:"Rizwan",dateReported:"2026-03-31",description:"Shahim met with an accident. His father is a painter. Requires 7 lakh for surgery.",category:"Medical",supportType:"One-time",status:"Closed",currency:"INR",amount:15000,remarks:"Agreed to release 15K INR as one-time"},
-  {id:"HIF-2026-006",beneficiaryName:"Fathima Aina",location:"Gurupura",reportedBy:"Rasheed",dateReported:"2026-03-31",description:"Severe spinal curvature (Scoliosis) caused by a genetic disorder, requiring multiple growth rod surgeries.",category:"Medical",supportType:"One-time",status:"Closed",currency:"INR",amount:25000,remarks:"One time support"},
-  {id:"HIF-2026-007",beneficiaryName:"Mohammed Aawez s/o Faheem",location:"Kaup",reportedBy:"Shahim",dateReported:"2026-04-10",description:"Education support as father unable to work due to eye injury",category:"Education",supportType:"Annual",status:"Open",currency:"INR",amount:15000,remarks:"Approved 15K for annual fees payment"},
-  {id:"HIF-2026-008",beneficiaryName:"Sharin (4 yrs, Female)",location:"Mangalore, India",reportedBy:"Suhaib Ahmed",dateReported:"2026-04-18",description:"4-year-old girl diagnosed with osteoid osteoma at C2 vertebra (cervical spine) with associated complications. Requires further medical treatment and support.",category:"Medical",supportType:"One-time",status:"Open",currency:"INR",amount:20000,remarks:"As agreed by Core team amount 20,000 will be released when required"},
+  {id:"HIF-2026-001",beneficiaryName:"Mr. IBRAHIM",location:"Karaya Janatha Colony, Uppinangady, D.K",reportedBy:"Anshar U.T",dateReported:"2026-02-05",description:"Construction of House roof repair",category:"Social",supportType:"One-time",status:"Closed",currency:"INR",amount:170000,remarks:"Approved amount of 170K INR for reconstruction of House",attachments:[]},
+  {id:"HIF-2026-002",beneficiaryName:"Mr. BASHEER AHMED",location:"KUDRADKA HOUSE, BELTHANGADY Tq, D.K",reportedBy:"Anshar U.T",dateReported:"2026-01-19",description:"Medical Support",category:"Medical",supportType:"Monthly",status:"Active",currency:"INR",amount:1500,remarks:"1500 INR approved from Feb'26 onwards to be managed by Qatar Unit",attachments:[]},
+  {id:"HIF-2026-003",beneficiaryName:"Muneer Mohammed Abdulla",location:"Bangalore",reportedBy:"Shamsheer",dateReported:"2026-02-15",description:"Stroke patient under continuous medical care; unable to work. Sole breadwinner. Support requested for children's education (2nd PU, 9th, 3rd standard).",category:"Education",supportType:"One-time",status:"Closed",currency:"INR",amount:10000,remarks:"10K INR approved as one-time payment",attachments:[]},
+  {id:"HIF-2026-004",beneficiaryName:"Mumtaz",location:"Kakkinge",reportedBy:"HIF Mangalore",dateReported:"2026-03-11",description:"",category:"Social",supportType:"One-time",status:"Active",currency:"INR",amount:250000,remarks:"2.5 Lakh approved under project ashiyana",attachments:[]},
+  {id:"HIF-2026-005",beneficiaryName:"Shahim",location:"Krishanpura",reportedBy:"Rizwan",dateReported:"2026-03-31",description:"Shahim met with an accident. His father is a painter. Requires 7 lakh for surgery.",category:"Medical",supportType:"One-time",status:"Closed",currency:"INR",amount:15000,remarks:"Agreed to release 15K INR as one-time",attachments:[]},
+  {id:"HIF-2026-006",beneficiaryName:"Fathima Aina",location:"Gurupura",reportedBy:"Rasheed",dateReported:"2026-03-31",description:"Severe spinal curvature (Scoliosis) caused by a genetic disorder, requiring multiple growth rod surgeries.",category:"Medical",supportType:"One-time",status:"Closed",currency:"INR",amount:25000,remarks:"One time support",attachments:[]},
+  {id:"HIF-2026-007",beneficiaryName:"Mohammed Aawez s/o Faheem",location:"Kaup",reportedBy:"Shahim",dateReported:"2026-04-10",description:"Education support as father unable to work due to eye injury",category:"Education",supportType:"Annual",status:"Open",currency:"INR",amount:15000,remarks:"Approved 15K for annual fees payment",attachments:[]},
+  {id:"HIF-2026-008",beneficiaryName:"Sharin (4 yrs, Female)",location:"Mangalore, India",reportedBy:"Suhaib Ahmed",dateReported:"2026-04-18",description:"4-year-old girl diagnosed with osteoid osteoma at C2 vertebra (cervical spine) with associated complications. Requires further medical treatment and support.",category:"Medical",supportType:"One-time",status:"Open",currency:"INR",amount:20000,remarks:"As agreed by Core team amount 20,000 will be released when required",attachments:[]},
 ];
 
-// ── Constants ──
-const CI  = {Medical:'🏥',Education:'📚',Religious:'🕌',Social:'🤝'};
-const SM  = {
+const CI = {Medical:'🏥',Education:'📚',Religious:'🕌',Social:'🤝'};
+const SM = {
   Open:    {bg:'#FFF8E1',text:'#B45309',dot:'#F59E0B'},
   Active:  {bg:'#D1FAE5',text:'#065F46',dot:'#10B981'},
   Closed:  {bg:'#E2E8F0',text:'#475569',dot:'#94A3B8'},
   Rejected:{bg:'#FEE2E2',text:'#991B1B',dot:'#EF4444'},
 };
+const FILE_ICONS = {
+  'application/pdf':'📄',
+  'image':'🖼️',
+  'video':'🎬',
+  'audio':'🎵',
+  'application/msword':'📝',
+  'application/vnd':'📊',
+  'text':'📃',
+};
 
 let CASES = [];
 let editingId = null;
 let currentDetailId = null;
+let newFilesQueue = []; // {file, name} objects queued for upload
 
 // ── Helpers ──
 function badge(s){const m=SM[s]||SM.Open;return`<span class="badge" style="background:${m.bg};color:${m.text};"><span class="dot" style="background:${m.dot};"></span>${s}</span>`;}
 function dr(l,v){return`<div class="dr"><span class="dl">${l}</span><span class="dv">${v}</span></div>`;}
-function toast(msg,bg='#065F46'){const t=document.getElementById('toast');t.textContent=msg;t.style.background=bg;t.style.display='block';setTimeout(()=>t.style.display='none',3000);}
-function overlay(show,msg='Saving…'){const o=document.getElementById('overlay');document.getElementById('ovr-msg').textContent=msg;o.className=show?'show':'';}
+function toast(msg,bg='#065F46'){const t=document.getElementById('toast');t.textContent=msg;t.style.background=bg;t.style.display='block';setTimeout(()=>t.style.display='none',3500);}
 function today(){return new Date().toISOString().split('T')[0];}
 function genId(){const yr=new Date().getFullYear();const max=CASES.map(c=>{const m=c.id.match(/HIF-\d+-(\d+)/);return m?parseInt(m[1]):0;}).reduce((a,b)=>Math.max(a,b),0);return`HIF-${yr}-${String(max+1).padStart(3,'0')}`;}
+function fileIcon(type){if(!type)return'📎';for(const[k,v]of Object.entries(FILE_ICONS)){if(type.startsWith(k))return v;}return'📎';}
+function fileSize(bytes){if(bytes<1024)return bytes+'B';if(bytes<1048576)return(bytes/1024).toFixed(0)+'KB';return(bytes/1048576).toFixed(1)+'MB';}
+
+function setOverlay(show, title='', detail='', pct=null){
+  const o=document.getElementById('overlay');
+  o.className=show?'show':'';
+  document.getElementById('ovr-msg').textContent=title;
+  document.getElementById('ovr-detail').textContent=detail;
+  const pw=document.getElementById('ovr-prog-wrap');
+  if(pct!==null){pw.style.display='block';document.getElementById('ovr-prog').style.width=pct+'%';}
+  else{pw.style.display='none';}
+}
 
 // ── Navigation ──
-window.go = function(v){
+window.go=function(v){
   ['dash','list','form','detail'].forEach(x=>{
     document.getElementById('v-'+x).classList.remove('on');
     const n=document.getElementById('n-'+x);if(n)n.classList.remove('on');
@@ -374,9 +421,73 @@ window.go = function(v){
 window.toggleMenu=function(){const m=document.getElementById('mmenu'),b=document.getElementById('mbtn'),o=m.style.display==='block';m.style.display=o?'none':'block';b.textContent=o?'☰':'✕';};
 window.closeMenu=function(){document.getElementById('mmenu').style.display='none';document.getElementById('mbtn').textContent='☰';};
 
-// ── Form open ──
-window.openNew = function(){
-  editingId=null;
+// ── File selection (queued, not uploaded yet) ──
+window.handleFileSelect=function(e){
+  Array.from(e.target.files).forEach(file=>{
+    newFilesQueue.push(file);
+  });
+  e.target.value='';
+  renderNewFileQueue();
+};
+
+function renderNewFileQueue(){
+  const el=document.getElementById('new-files');
+  el.innerHTML=newFilesQueue.map((f,i)=>`
+    <div class="file-item">
+      <span style="flex-shrink:0;">${fileIcon(f.type)}</span>
+      <span class="fname">${f.name}</span>
+      <span class="fsize">${fileSize(f.size)}</span>
+      <button class="file-del" onclick="removeQueuedFile(${i})">✕</button>
+    </div>`).join('');
+}
+
+window.removeQueuedFile=function(i){
+  newFilesQueue.splice(i,1);
+  renderNewFileQueue();
+};
+
+// ── Render existing attachments in form (edit mode) ──
+function renderExistingFiles(attachments){
+  const el=document.getElementById('existing-files');
+  if(!attachments||attachments.length===0){el.innerHTML='';return;}
+  el.innerHTML='<div style="font-size:11px;color:#9CA3AF;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin:10px 0 6px;">Existing Attachments</div>'+
+    attachments.map((a,i)=>`
+      <div class="file-item">
+        <span style="flex-shrink:0;">${fileIcon(a.type)}</span>
+        <span class="fname">${a.name}</span>
+        <span class="fsize">${a.size?fileSize(a.size):''}</span>
+        <a href="${a.url}" target="_blank" style="background:#EFF6FF;border:none;color:#1D4ED8;padding:4px 9px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;flex-shrink:0;">View</a>
+        <button class="file-del" onclick="removeExistingFile(${i})">✕</button>
+      </div>`).join('');
+}
+
+let existingAttachments = []; // track existing when editing
+
+window.removeExistingFile=function(i){
+  existingAttachments.splice(i,1);
+  renderExistingFiles(existingAttachments);
+};
+
+// ── Upload a single file to Firebase Storage ──
+function uploadFile(caseId, file, onProgress){
+  return new Promise((resolve,reject)=>{
+    const path=`cases/${caseId}/${Date.now()}_${file.name}`;
+    const storageRef=ref(storage,path);
+    const task=uploadBytesResumable(storageRef,file);
+    task.on('state_changed',
+      snap=>{const pct=Math.round((snap.bytesTransferred/snap.totalBytes)*100);onProgress(pct);},
+      reject,
+      async()=>{
+        const url=await getDownloadURL(task.snapshot.ref);
+        resolve({name:file.name,url,type:file.type,size:file.size,path,uploadedAt:new Date().toISOString()});
+      }
+    );
+  });
+}
+
+// ── Open form ──
+window.openNew=function(){
+  editingId=null; newFilesQueue=[]; existingAttachments=[];
   document.getElementById('form-title').textContent='New Case';
   document.getElementById('form-sub').textContent='Register a new beneficiary case';
   document.getElementById('save-btn').textContent='✓  Create Case';
@@ -389,12 +500,15 @@ window.openNew = function(){
   document.getElementById('inp-sup').value='One-time';
   document.getElementById('inp-cur').value='INR';
   ['f-name','f-loc','f-rep','f-date'].forEach(id=>document.getElementById(id).classList.remove('err'));
+  document.getElementById('existing-files').innerHTML='';
+  document.getElementById('new-files').innerHTML='';
   go('form');
 };
 
-window.openEdit = function(id){
+window.openEdit=function(id){
   const c=CASES.find(x=>x.id===id);if(!c)return;
-  editingId=id;
+  editingId=id; newFilesQueue=[];
+  existingAttachments=[...(c.attachments||[])];
   document.getElementById('form-title').textContent='Edit: '+id;
   document.getElementById('form-sub').textContent='Update case details';
   document.getElementById('save-btn').textContent='💾  Save Changes';
@@ -414,30 +528,54 @@ window.openEdit = function(id){
   document.getElementById('inp-amt').value=c.amount||'';
   document.getElementById('inp-rem').value=c.remarks||'';
   ['f-name','f-loc','f-rep','f-date'].forEach(id=>document.getElementById(id).classList.remove('err'));
+  document.getElementById('new-files').innerHTML='';
+  renderExistingFiles(existingAttachments);
   go('form');
 };
 
-window.editCurrent = function(){if(currentDetailId)openEdit(currentDetailId);};
+window.editCurrent=function(){if(currentDetailId)openEdit(currentDetailId);};
 
 // ── Save ──
-window.handleSave = async function(){
+window.handleSave=async function(){
   let ok=true;
-  const checks=[
-    {f:'f-name',v:document.getElementById('inp-name').value.trim()},
-    {f:'f-loc', v:document.getElementById('inp-loc').value.trim()},
-    {f:'f-rep', v:document.getElementById('inp-rep').value.trim()},
-    {f:'f-date',v:document.getElementById('inp-date').value},
-  ];
-  checks.forEach(({f,v})=>{
+  [{f:'f-name',v:document.getElementById('inp-name').value.trim()},
+   {f:'f-loc', v:document.getElementById('inp-loc').value.trim()},
+   {f:'f-rep', v:document.getElementById('inp-rep').value.trim()},
+   {f:'f-date',v:document.getElementById('inp-date').value}
+  ].forEach(({f,v})=>{
     if(!v){document.getElementById(f).classList.add('err');ok=false;}
     else document.getElementById(f).classList.remove('err');
   });
   if(!ok)return;
 
-  overlay(true, editingId?'Updating…':'Saving…');
+  const caseId=editingId||genId();
   document.getElementById('save-btn').disabled=true;
 
+  // Upload new files first
+  let uploadedNew=[];
+  if(newFilesQueue.length>0){
+    for(let i=0;i<newFilesQueue.length;i++){
+      const file=newFilesQueue[i];
+      setOverlay(true,`Uploading file ${i+1} of ${newFilesQueue.length}…`,file.name,0);
+      try{
+        const att=await uploadFile(caseId,file,pct=>{
+          setOverlay(true,`Uploading ${i+1}/${newFilesQueue.length}…`,file.name,pct);
+        });
+        uploadedNew.push(att);
+      } catch(e){
+        setOverlay(false);
+        toast('Upload failed: '+e.message,'#991B1B');
+        document.getElementById('save-btn').disabled=false;
+        return;
+      }
+    }
+  }
+
+  setOverlay(true,'Saving case…','',null);
+
+  const allAttachments=[...existingAttachments,...uploadedNew];
   const data={
+    id:caseId,
     beneficiaryName:document.getElementById('inp-name').value.trim(),
     location:document.getElementById('inp-loc').value.trim(),
     reportedBy:document.getElementById('inp-rep').value.trim(),
@@ -448,28 +586,25 @@ window.handleSave = async function(){
     currency:document.getElementById('inp-cur').value,
     amount:parseFloat(document.getElementById('inp-amt').value)||0,
     remarks:document.getElementById('inp-rem').value.trim(),
+    status:editingId?document.getElementById('inp-status').value:'Open',
+    attachments:allAttachments,
   };
 
   try{
-    if(!editingId){
-      const newId=genId();
-      await setDoc(doc(db,'cases',newId),{...data,id:newId,status:'Open'});
-      toast(`✓ Case ${newId} created successfully`);
-    } else {
-      const status=document.getElementById('inp-status').value;
-      await setDoc(doc(db,'cases',editingId),{...data,id:editingId,status},{merge:true});
-      toast(`✓ Case ${editingId} updated`);
-    }
+    await setDoc(doc(db,'cases',caseId),data,{merge:true});
+    setOverlay(false);
+    toast(editingId?`✓ Case ${caseId} updated`:`✓ Case ${caseId} created`);
+    newFilesQueue=[];
     go('list');
   } catch(e){
-    toast('❌ Error: '+e.message,'#991B1B');
+    setOverlay(false);
+    toast('Save failed: '+e.message,'#991B1B');
   }
-  overlay(false);
   document.getElementById('save-btn').disabled=false;
 };
 
 // ── Detail ──
-window.openDetail = function(id){
+window.openDetail=function(id){
   const c=CASES.find(x=>x.id===id);if(!c)return;
   currentDetailId=id;
   document.getElementById('d-name').textContent=c.beneficiaryName;
@@ -487,6 +622,20 @@ window.openDetail = function(id){
     dr('Amount',c.amount>0?`<strong>${c.currency} ${Number(c.amount).toLocaleString()}</strong>`:'Not specified');
   if(c.remarks){document.getElementById('d-rem-wrap').style.display='block';document.getElementById('d-rem').textContent=c.remarks;}
   else document.getElementById('d-rem-wrap').style.display='none';
+  // Attachments
+  const atts=c.attachments||[];
+  document.getElementById('d-att-title').textContent=`Attachments (${atts.length})`;
+  document.getElementById('d-attachments').innerHTML=atts.length===0
+    ?'<div style="color:#9CA3AF;font-size:14px;padding:8px 0;">No attachments</div>'
+    :atts.map(a=>`
+      <div class="att-item">
+        <span class="att-icon">${fileIcon(a.type)}</span>
+        <div style="flex:1;min-width:0;">
+          <div class="att-name">${a.name}</div>
+          <div style="font-size:11px;color:#9CA3AF;">${a.size?fileSize(a.size):''} · ${a.uploadedAt?new Date(a.uploadedAt).toLocaleDateString():''}</div>
+        </div>
+        <a href="${a.url}" target="_blank" class="att-link">Open ↗</a>
+      </div>`).join('');
   go('detail');
 };
 
@@ -499,23 +648,10 @@ function renderDash(){
     {l:'Closed', v:CASES.filter(c=>c.status==='Closed').length,c:'#475569',i:'⚫'},
     {l:'Rejected',v:CASES.filter(c=>c.status==='Rejected').length,c:'#991B1B',i:'🔴'},
   ];
-  document.getElementById('sgrid').innerHTML=st.map(s=>`
-    <div class="sc"><div style="font-size:20px;margin-bottom:5px;">${s.i}</div>
-    <div class="sv" style="color:${s.c};">${s.v}</div><div class="sl">${s.l}</div></div>`).join('');
+  document.getElementById('sgrid').innerHTML=st.map(s=>`<div class="sc"><div style="font-size:20px;margin-bottom:5px;">${s.i}</div><div class="sv" style="color:${s.c};">${s.v}</div><div class="sl">${s.l}</div></div>`).join('');
   const cats=['Medical','Education','Religious','Social'];
-  document.getElementById('catbars').innerHTML=cats.map(cat=>{
-    const n=CASES.filter(c=>c.category===cat).length;
-    const pct=CASES.length?(n/CASES.length)*100:0;
-    return`<div class="cat-row"><div style="width:85px;font-size:13px;color:#374151;">${CI[cat]} ${cat}</div>
-    <div class="cb"><div class="cf" style="width:${pct}%;"></div></div>
-    <div style="width:18px;text-align:right;font-size:13px;font-weight:700;">${n}</div></div>`;
-  }).join('');
-  document.getElementById('recents').innerHTML=CASES.slice(0,5).map(c=>`
-    <div class="rr" onclick="openDetail('${c.id}')">
-      <div style="min-width:0;flex:1;padding-right:8px;">
-        <div class="rn">${c.beneficiaryName}</div>
-        <div class="rm">${c.id} · ${c.dateReported}</div>
-      </div>${badge(c.status)}</div>`).join('');
+  document.getElementById('catbars').innerHTML=cats.map(cat=>{const n=CASES.filter(c=>c.category===cat).length;const pct=CASES.length?(n/CASES.length)*100:0;return`<div class="cat-row"><div style="width:85px;font-size:13px;color:#374151;">${CI[cat]} ${cat}</div><div class="cb"><div class="cf" style="width:${pct}%;"></div></div><div style="width:18px;text-align:right;font-size:13px;font-weight:700;">${n}</div></div>`;}).join('');
+  document.getElementById('recents').innerHTML=CASES.slice(0,5).map(c=>`<div class="rr" onclick="openDetail('${c.id}')"><div style="min-width:0;flex:1;padding-right:8px;"><div class="rn">${c.beneficiaryName}</div><div class="rm">${c.id} · ${c.dateReported}</div></div>${badge(c.status)}</div>`).join('');
 }
 
 // ── List ──
@@ -523,14 +659,13 @@ function renderList(){
   const q=(document.getElementById('srch').value||'').toLowerCase();
   const fs=document.getElementById('fst').value;
   const fc=document.getElementById('fct').value;
-  const f=CASES.filter(c=>{
-    const ms=!q||[c.beneficiaryName,c.id,c.reportedBy,c.location].some(v=>(v||'').toLowerCase().includes(q));
-    return ms&&(!fs||c.status===fs)&&(!fc||c.category===fc);
-  });
+  const f=CASES.filter(c=>{const ms=!q||[c.beneficiaryName,c.id,c.reportedBy,c.location].some(v=>(v||'').toLowerCase().includes(q));return ms&&(!fs||c.status===fs)&&(!fc||c.category===fc);});
   document.getElementById('lcount').textContent=`${f.length} of ${CASES.length} cases`;
   document.getElementById('tbody').innerHTML=f.length===0
-    ?`<tr><td colspan="10" style="text-align:center;padding:40px;color:#9CA3AF;">No cases found</td></tr>`
-    :f.map((c,i)=>`<tr style="background:${i%2===0?'#fff':'#F9FAFB'}">
+    ?`<tr><td colspan="11" style="text-align:center;padding:40px;color:#9CA3AF;">No cases found</td></tr>`
+    :f.map((c,i)=>{
+      const atts=c.attachments||[];
+      return`<tr style="background:${i%2===0?'#fff':'#F9FAFB'}">
         <td><span class="cid" onclick="openDetail('${c.id}')">${c.id}</span></td>
         <td style="font-weight:600;">${c.beneficiaryName}</td>
         <td style="color:#6B7280;font-size:12px;">${c.location}</td>
@@ -539,48 +674,42 @@ function renderList(){
         <td><span class="spill">${c.supportType}</span></td>
         <td>${badge(c.status)}</td>
         <td style="font-weight:600;">${c.amount>0?c.currency+' '+Number(c.amount).toLocaleString():'—'}</td>
+        <td>${atts.length>0?`<span style="background:#DBEAFE;color:#1D4ED8;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;">📎 ${atts.length}</span>`:'—'}</td>
         <td>
           <button class="abtn" onclick="openDetail('${c.id}')">View</button>
           <button class="abtn ebtn" onclick="openEdit('${c.id}')" style="margin-left:4px;">Edit</button>
         </td>
-      </tr>`).join('');
+      </tr>`;
+    }).join('');
 }
 window.renderList=renderList;
 
 // ── Export ──
 window.exportCSV=function(){
-  const h=['Case ID','Beneficiary Name','Location','Reported By','Date','Description','Category','Support Type','Status','Currency','Amount','Remarks'];
-  const rows=CASES.map(c=>[c.id,c.beneficiaryName,c.location,c.reportedBy,c.dateReported,c.description,c.category,c.supportType,c.status,c.currency,c.amount,c.remarks]
-    .map(v=>'"'+String(v||'').replace(/"/g,'""')+'"'));
+  const h=['Case ID','Beneficiary Name','Location','Reported By','Date','Description','Category','Support Type','Status','Currency','Amount','Remarks','Attachments'];
+  const rows=CASES.map(c=>[c.id,c.beneficiaryName,c.location,c.reportedBy,c.dateReported,c.description,c.category,c.supportType,c.status,c.currency,c.amount,c.remarks,(c.attachments||[]).length+' file(s)'].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"'));
   const csv=[h.join(','),...rows.map(r=>r.join(','))].join('\n');
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));
-  a.download=`HIF_Qatar_Cases_${today()}.csv`;a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));a.download=`HIF_Qatar_Cases_${today()}.csv`;a.click();
   toast('✓ Exported to CSV');
 };
 
-// ── Init: seed if empty, then live-listen ──
+// ── Init ──
 async function init(){
   try{
-    document.getElementById('load-msg').textContent='Checking database…';
-    // Live listener — updates UI instantly for ALL users when data changes
     const q=query(collection(db,'cases'),orderBy('dateReported','desc'));
-    onSnapshot(q, async(snap)=>{
+    onSnapshot(q,async snap=>{
       if(snap.empty){
-        // First time — seed the database
         document.getElementById('load-msg').textContent='Setting up database…';
         for(const c of SEED) await setDoc(doc(db,'cases',c.id),c);
-        return; // listener will fire again with seeded data
+        return;
       }
       CASES=snap.docs.map(d=>({...d.data(),id:d.id}));
-      // Sort by date desc
       CASES.sort((a,b)=>b.dateReported.localeCompare(a.dateReported));
       document.getElementById('loading').style.display='none';
       document.getElementById('ibar').style.display='flex';
       document.getElementById('sync-info').textContent=`${CASES.length} cases · Live`;
-      renderDash();
-      renderList();
-    }, err=>{
+      renderDash();renderList();
+    },err=>{
       document.getElementById('loading').style.display='none';
       document.getElementById('errbanner').style.display='block';
       document.getElementById('err-msg').textContent='Database error: '+err.message;
@@ -588,10 +717,9 @@ async function init(){
   } catch(e){
     document.getElementById('loading').style.display='none';
     document.getElementById('errbanner').style.display='block';
-    document.getElementById('err-msg').textContent='Failed to connect: '+e.message;
+    document.getElementById('err-msg').textContent='Connection failed: '+e.message;
   }
 }
-
 init();
 </script>
 </body>
