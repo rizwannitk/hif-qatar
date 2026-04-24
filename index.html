@@ -191,7 +191,7 @@ tr:nth-child(even) td{background:#F9FAFB;}
   </div>
   <div class="filters">
     <input type="text" id="srch" placeholder="🔍 Search name, ID, location..." oninput="renderList()"/>
-    <select id="fst" onchange="renderList()"><option value="">All Statuses</option><option>Open</option><option>Active</option><option>Closed</option><option>Rejected</option></select>
+    <select id="fst" onchange="renderList()"><option value="">All Statuses</option><option>Open</option><option>Active</option><option>Approved</option><option>Closed</option><option>Rejected</option></select>
     <select id="fct" onchange="renderList()"><option value="">All Categories</option><option>Medical</option><option>Education</option><option>Religious</option><option>Social</option></select>
   </div>
   <div class="tw">
@@ -286,7 +286,7 @@ Remarks: Approved by core team"></textarea>
       </div>
       <div class="field" id="f-status-sel" style="display:none;">
         <label>Status</label>
-        <select id="inp-status"><option>Open</option><option>Active</option><option>Closed</option><option>Rejected</option></select>
+        <select id="inp-status"><option>Open</option><option>Active</option><option>Approved</option><option>Closed</option><option>Rejected</option></select>
       </div>
       <div class="field" id="f-status-fix">
         <label>Status</label>
@@ -394,6 +394,7 @@ const CI = {Medical:'🏥',Education:'📚',Religious:'🕌',Social:'🤝'};
 const SM = {
   Open:    {bg:'#FFF8E1',text:'#B45309',dot:'#F59E0B'},
   Active:  {bg:'#D1FAE5',text:'#065F46',dot:'#10B981'},
+  Approved:{bg:'#DBEAFE',text:'#1D4ED8',dot:'#3B82F6'},
   Closed:  {bg:'#E2E8F0',text:'#475569',dot:'#94A3B8'},
   Rejected:{bg:'#FEE2E2',text:'#991B1B',dot:'#EF4444'},
 };
@@ -689,6 +690,7 @@ function renderDash(){
     {l:'Total',  v:CASES.length,c:'#1E3A5F',i:'📋'},
     {l:'Open',   v:CASES.filter(c=>c.status==='Open').length,c:'#B45309',i:'🟡'},
     {l:'Active', v:CASES.filter(c=>c.status==='Active').length,c:'#065F46',i:'🟢'},
+    {l:'Approved',v:CASES.filter(c=>c.status==='Approved').length,c:'#1D4ED8',i:'🔵'},
     {l:'Closed', v:CASES.filter(c=>c.status==='Closed').length,c:'#475569',i:'⚫'},
     {l:'Rejected',v:CASES.filter(c=>c.status==='Rejected').length,c:'#991B1B',i:'🔴'},
   ];
