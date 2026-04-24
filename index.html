@@ -211,6 +211,35 @@ tr:nth-child(even) td{background:#F9FAFB;}
     <button class="btn-back" onclick="go('list')">← Back</button>
     <div><div class="pt" id="form-title">New Case</div><div class="ps" id="form-sub">Register a new beneficiary case</div></div>
   </div>
+
+  <!-- AI PASTE PANEL -->
+  <div id="ai-panel" class="card" style="margin-bottom:18px;border:2px solid #10B981;background:linear-gradient(135deg,#F0FDF4,#fff);">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,#10B981,#059669);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">✨</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#065F46;">AI Auto-Fill</div>
+        <div style="font-size:12px;color:#6B7280;">Paste any text — WhatsApp message, email, notes — Claude will extract and fill all fields</div>
+      </div>
+      <button onclick="toggleAiPanel()" id="ai-toggle-btn" style="margin-left:auto;background:none;border:1px solid #D1D5DB;color:#6B7280;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;">Hide</button>
+    </div>
+    <div id="ai-input-wrap">
+      <textarea id="ai-raw-text" rows="5" style="width:100%;padding:12px;border-radius:8px;border:1.5px solid #D1FAE5;font-size:14px;line-height:1.6;background:#fff;outline:none;resize:vertical;font-family:system-ui,sans-serif;" placeholder="Paste case details here... e.g:
+
+Beneficiary: Ahmed Ali, 45 years
+Location: Doha, Qatar
+Reported by: Khalid Hassan
+Medical case - needs surgery
+Amount: 5000 QAR
+Remarks: Approved by core team"></textarea>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;">
+        <button onclick="aiParse()" id="ai-parse-btn" style="background:linear-gradient(135deg,#10B981,#059669);border:none;color:#fff;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px;">
+          <span id="ai-btn-icon">✨</span> <span id="ai-btn-text">Parse with AI</span>
+        </button>
+        <div id="ai-status" style="font-size:13px;color:#6B7280;display:none;"></div>
+        <button onclick="clearAiPanel()" style="background:none;border:none;color:#9CA3AF;font-size:13px;cursor:pointer;">Clear</button>
+      </div>
+    </div>
+  </div>
   <div class="grid2">
     <!-- Card 1: Beneficiary -->
     <div class="card">
@@ -503,6 +532,11 @@ window.openNew=function(){
   document.getElementById('f-id').style.display='none';
   document.getElementById('f-status-sel').style.display='none';
   document.getElementById('f-status-fix').style.display='block';
+  document.getElementById('ai-panel').style.display='block';
+  document.getElementById('ai-raw-text').value='';
+  document.getElementById('ai-status').style.display='none';
+  document.getElementById('ai-input-wrap').style.display='block';
+  document.getElementById('ai-toggle-btn').textContent='Hide';
   ['inp-name','inp-loc','inp-rep','inp-desc','inp-rem','inp-amt'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('inp-date').value=today();
   document.getElementById('inp-cat').value='Medical';
@@ -521,6 +555,7 @@ window.openEdit=function(id){
   document.getElementById('form-title').textContent='Edit: '+id;
   document.getElementById('form-sub').textContent='Update case details';
   document.getElementById('save-btn').textContent='💾  Save Changes';
+  document.getElementById('ai-panel').style.display='none';
   document.getElementById('f-id').style.display='block';
   document.getElementById('inp-id').value=id;
   document.getElementById('f-status-sel').style.display='block';
@@ -700,6 +735,112 @@ window.exportCSV=function(){
   const csv=[h.join(','),...rows.map(r=>r.join(','))].join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));a.download=`HIF_Qatar_Cases_${today()}.csv`;a.click();
   toast('✓ Exported to CSV');
+};
+
+// ── AI Panel toggle ──
+window.toggleAiPanel = function(){
+  const wrap = document.getElementById('ai-input-wrap');
+  const btn = document.getElementById('ai-toggle-btn');
+  const hidden = wrap.style.display === 'none';
+  wrap.style.display = hidden ? 'block' : 'none';
+  btn.textContent = hidden ? 'Hide' : 'Show';
+};
+window.clearAiPanel = function(){
+  document.getElementById('ai-raw-text').value = '';
+  document.getElementById('ai-status').style.display = 'none';
+};
+
+// ── AI Parse — calls Claude API to extract fields ──
+window.aiParse = async function(){
+  const text = document.getElementById('ai-raw-text').value.trim();
+  if(!text){ toast('Please paste some case details first','#991B1B'); return; }
+
+  const btn = document.getElementById('ai-parse-btn');
+  const icon = document.getElementById('ai-btn-icon');
+  const label = document.getElementById('ai-btn-text');
+  const status = document.getElementById('ai-status');
+
+  btn.disabled = true;
+  icon.textContent = '⏳';
+  label.textContent = 'Parsing…';
+  status.style.display = 'block';
+  status.textContent = 'Claude is reading the text…';
+
+  const today = new Date().toISOString().split('T')[0];
+
+  const prompt = `You are a data extraction assistant for HIF Qatar Case Management.
+Extract the following fields from the text below and return ONLY a valid JSON object, nothing else.
+
+Fields to extract:
+- beneficiaryName (string) — full name of the beneficiary
+- location (string) — city/area/country
+- reportedBy (string) — who reported the case
+- dateReported (string) — in YYYY-MM-DD format. If not found use "${today}"
+- description (string) — case description / medical or social background
+- category (string) — MUST be exactly one of: Medical, Education, Religious, Social
+- supportType (string) — MUST be exactly one of: One-time, Monthly, Annual
+- currency (string) — MUST be exactly one of: INR, QAR. Default INR
+- amount (number) — numeric amount only, no currency symbols. 0 if not found
+- remarks (string) — any additional notes, decisions, remarks
+
+Text to parse:
+"""
+${text}
+"""
+
+Return ONLY a JSON object like:
+{"beneficiaryName":"...","location":"...","reportedBy":"...","dateReported":"...","description":"...","category":"...","supportType":"...","currency":"...","amount":0,"remarks":"..."}`;
+
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:800,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await res.json();
+    const raw = data.content?.[0]?.text || '';
+
+    // Extract JSON from response
+    const match = raw.match(/\{[\s\S]*\}/);
+    if(!match) throw new Error('Could not parse AI response');
+    const parsed = JSON.parse(match[0]);
+
+    // Fill form fields
+    if(parsed.beneficiaryName) document.getElementById('inp-name').value = parsed.beneficiaryName;
+    if(parsed.location)        document.getElementById('inp-loc').value  = parsed.location;
+    if(parsed.reportedBy)      document.getElementById('inp-rep').value  = parsed.reportedBy;
+    if(parsed.dateReported)    document.getElementById('inp-date').value = parsed.dateReported;
+    if(parsed.description)     document.getElementById('inp-desc').value = parsed.description;
+    if(parsed.category && ['Medical','Education','Religious','Social'].includes(parsed.category))
+      document.getElementById('inp-cat').value = parsed.category;
+    if(parsed.supportType && ['One-time','Monthly','Annual'].includes(parsed.supportType))
+      document.getElementById('inp-sup').value = parsed.supportType;
+    if(parsed.currency && ['INR','QAR'].includes(parsed.currency))
+      document.getElementById('inp-cur').value = parsed.currency;
+    if(parsed.amount)   document.getElementById('inp-amt').value = parsed.amount;
+    if(parsed.remarks)  document.getElementById('inp-rem').value = parsed.remarks;
+
+    // Clear errors on filled fields
+    ['f-name','f-loc','f-rep','f-date'].forEach(id=>document.getElementById(id).classList.remove('err'));
+
+    status.textContent = '✓ Fields filled! Please review and save.';
+    status.style.color = '#065F46';
+    toast('✓ AI filled the form — please review before saving');
+
+  } catch(e){
+    console.error('AI parse error:',e);
+    status.textContent = '✗ Failed: '+e.message;
+    status.style.color = '#991B1B';
+    toast('AI parsing failed: '+e.message,'#991B1B');
+  }
+
+  btn.disabled = false;
+  icon.textContent = '✨';
+  label.textContent = 'Parse with AI';
 };
 
 // ── Init ──
