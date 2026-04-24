@@ -750,124 +750,255 @@ window.clearAiPanel = function(){
   document.getElementById('ai-status').style.display = 'none';
 };
 
-// ── AI Parse — calls Claude API to extract fields ──
+// ── Smart JS Parser — with Claude API + smart fallback ──
 window.aiParse = async function(){
   const text = document.getElementById('ai-raw-text').value.trim();
   if(!text){ toast('Please paste some case details first','#991B1B'); return; }
 
-  const btn = document.getElementById('ai-parse-btn');
-  const icon = document.getElementById('ai-btn-icon');
-  const label = document.getElementById('ai-btn-text');
+  const btn    = document.getElementById('ai-parse-btn');
+  const icon   = document.getElementById('ai-btn-icon');
+  const label  = document.getElementById('ai-btn-text');
   const status = document.getElementById('ai-status');
 
-  btn.disabled = true;
-  icon.textContent = '⏳';
-  label.textContent = 'Parsing…';
-  status.style.display = 'block';
-  status.textContent = 'Claude is reading the text…';
+  btn.disabled = true; icon.textContent = '⏳'; label.textContent = 'Parsing…';
+  status.style.display = 'block'; status.style.color = '#6B7280';
+  status.textContent = 'Reading text…';
 
-  const today = new Date().toISOString().split('T')[0];
+  let parsed = null;
 
-  const prompt = `You are a data extraction assistant for HIF Qatar Case Management.
-Extract the following fields from the text below and return ONLY a valid JSON object, nothing else.
-
-Fields to extract:
-- beneficiaryName (string) — full name of the beneficiary
-- location (string) — city/area/country
-- reportedBy (string) — who reported the case
-- dateReported (string) — in YYYY-MM-DD format. If not found use "${today}"
-- description (string) — case description / medical or social background
-- category (string) — MUST be exactly one of: Medical, Education, Religious, Social
-- supportType (string) — MUST be exactly one of: One-time, Monthly, Annual
-- currency (string) — MUST be exactly one of: INR, QAR. Default INR
-- amount (number) — numeric amount only, no currency symbols. 0 if not found
-- remarks (string) — any additional notes, decisions, remarks
-
-Text to parse:
-"""
-${text}
-"""
-
-Return ONLY a JSON object like:
-{"beneficiaryName":"...","location":"...","reportedBy":"...","dateReported":"...","description":"...","category":"...","supportType":"...","currency":"...","amount":0,"remarks":"..."}`;
-
+  // Try Claude API first
   try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const todayDate = new Date().toISOString().split('T')[0];
+    const prompt = `Extract case details from this text. Return ONLY a JSON object, no extra text.
+Fields: beneficiaryName, location, reportedBy, dateReported (YYYY-MM-DD, default "${todayDate}"), description, category (Medical/Education/Religious/Social), supportType (One-time/Monthly/Annual), currency (INR/QAR default INR), amount (number), remarks.
+Text: """${text}"""`;
+
+    status.textContent = '✨ Asking Claude AI…';
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:800,
-        messages:[{role:'user',content:prompt}]
+      headers:{
+        'Content-Type':'application/json',
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-allow-browser':'true'
+      },
+      body: JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:500,
+        messages:[{role:'user', content:prompt}]
       })
     });
     const data = await res.json();
     const raw = data.content?.[0]?.text || '';
-
-    // Extract JSON from response
     const match = raw.match(/\{[\s\S]*\}/);
-    if(!match) throw new Error('Could not parse AI response');
-    const parsed = JSON.parse(match[0]);
-
-    // Fill form fields
-    if(parsed.beneficiaryName) document.getElementById('inp-name').value = parsed.beneficiaryName;
-    if(parsed.location)        document.getElementById('inp-loc').value  = parsed.location;
-    if(parsed.reportedBy)      document.getElementById('inp-rep').value  = parsed.reportedBy;
-    if(parsed.dateReported)    document.getElementById('inp-date').value = parsed.dateReported;
-    if(parsed.description)     document.getElementById('inp-desc').value = parsed.description;
-    if(parsed.category && ['Medical','Education','Religious','Social'].includes(parsed.category))
-      document.getElementById('inp-cat').value = parsed.category;
-    if(parsed.supportType && ['One-time','Monthly','Annual'].includes(parsed.supportType))
-      document.getElementById('inp-sup').value = parsed.supportType;
-    if(parsed.currency && ['INR','QAR'].includes(parsed.currency))
-      document.getElementById('inp-cur').value = parsed.currency;
-    if(parsed.amount)   document.getElementById('inp-amt').value = parsed.amount;
-    if(parsed.remarks)  document.getElementById('inp-rem').value = parsed.remarks;
-
-    // Clear errors on filled fields
-    ['f-name','f-loc','f-rep','f-date'].forEach(id=>document.getElementById(id).classList.remove('err'));
-
-    status.textContent = '✓ Fields filled! Please review and save.';
-    status.style.color = '#065F46';
-    toast('✓ AI filled the form — please review before saving');
-
+    if(match) parsed = JSON.parse(match[0]);
   } catch(e){
-    console.error('AI parse error:',e);
-    status.textContent = '✗ Failed: '+e.message;
-    status.style.color = '#991B1B';
-    toast('AI parsing failed: '+e.message,'#991B1B');
+    console.log('Claude API unavailable, using smart extraction:', e.message);
   }
 
-  btn.disabled = false;
-  icon.textContent = '✨';
-  label.textContent = 'Parse with AI';
+  // Fallback to smart JS extraction
+  if(!parsed){
+    status.textContent = 'Using smart extraction…';
+    parsed = parseText(text);
+  }
+
+  // Fill fields
+  if(parsed.beneficiaryName) document.getElementById('inp-name').value = parsed.beneficiaryName;
+  if(parsed.location)        document.getElementById('inp-loc').value  = parsed.location;
+  if(parsed.reportedBy)      document.getElementById('inp-rep').value  = parsed.reportedBy;
+  if(parsed.dateReported)    document.getElementById('inp-date').value = parsed.dateReported;
+  if(parsed.description)     document.getElementById('inp-desc').value = parsed.description;
+  if(['Medical','Education','Religious','Social'].includes(parsed.category))
+    document.getElementById('inp-cat').value = parsed.category;
+  if(['One-time','Monthly','Annual'].includes(parsed.supportType))
+    document.getElementById('inp-sup').value = parsed.supportType;
+  if(['INR','QAR'].includes(parsed.currency))
+    document.getElementById('inp-cur').value = parsed.currency;
+  if(parsed.amount > 0) document.getElementById('inp-amt').value = parsed.amount;
+  if(parsed.remarks)    document.getElementById('inp-rem').value = parsed.remarks;
+
+  ['f-name','f-loc','f-rep','f-date'].forEach(id=>document.getElementById(id).classList.remove('err'));
+
+  status.textContent = '✓ Fields filled — please review before saving';
+  status.style.color = '#065F46';
+  toast('✓ Form filled — please review and save');
+
+  btn.disabled = false; icon.textContent = '✨'; label.textContent = 'Parse with AI';
 };
+
+function parseText(text){
+  const result = {};
+
+  // Clean the text — remove bullet points, tabs, extra spaces
+  const clean = text.replace(/[\t]/g,' ').replace(/[•·\-\*]\s*/g,'');
+
+  function extract(patterns){
+    for(const pat of patterns){
+      const m = clean.match(pat);
+      if(m && m[1]) return m[1].trim().replace(/\s+/g,' ');
+    }
+    return '';
+  }
+
+  // Beneficiary Name
+  result.beneficiaryName = extract([
+    /beneficiary\s*name\s*[:\-]+\s*(.+)/i,
+    /name\s*[:\-]+\s*(.+)/i,
+    /patient\s*[:\-]+\s*(.+)/i,
+  ]);
+
+  // Location
+  result.location = extract([
+    /beneficiary\s*location\s*[:\-]+\s*(.+)/i,
+    /location\s*[:\-]+\s*(.+)/i,
+    /address\s*[:\-]+\s*(.+)/i,
+    /place\s*[:\-]+\s*(.+)/i,
+    /city\s*[:\-]+\s*(.+)/i,
+  ]);
+
+  // Reported By
+  result.reportedBy = extract([
+    /case\s*reported\s*by\s*[:\-]+\s*(.+)/i,
+    /reported\s*by\s*[:\-]+\s*(.+)/i,
+    /reporter\s*[:\-]+\s*(.+)/i,
+    /submitted\s*by\s*[:\-]+\s*(.+)/i,
+    /referred\s*by\s*[:\-]+\s*(.+)/i,
+  ]);
+
+  // Date
+  const rawDate = extract([
+    /date\s*reported\s*[:\-]+\s*(.+)/i,
+    /date\s*of\s*report\s*[:\-]+\s*(.+)/i,
+    /report\s*date\s*[:\-]+\s*(.+)/i,
+    /date\s*[:\-]+\s*(.+)/i,
+  ]);
+  result.dateReported = rawDate ? parseDate(rawDate) : new Date().toISOString().split('T')[0];
+
+  // Description
+  result.description = extract([
+    /case\s*description\s*[:\-]+\s*(.+)/i,
+    /description\s*[:\-]+\s*(.+)/i,
+    /details?\s*[:\-]+\s*(.+)/i,
+    /reason\s*[:\-]+\s*(.+)/i,
+    /background\s*[:\-]+\s*(.+)/i,
+    /issue\s*[:\-]+\s*(.+)/i,
+    /problem\s*[:\-]+\s*(.+)/i,
+  ]);
+
+  // Category — check explicit field first, then keywords
+  const catExplicit = extract([
+    /category\s*[:\-]+\s*(.+)/i,
+    /type\s*of\s*case\s*[:\-]+\s*(.+)/i,
+  ]).toLowerCase();
+  const catScan = (catExplicit + ' ' + clean).toLowerCase();
+  if(/educat|school|college|fees|student|class|tuition|study/i.test(catScan))         result.category = 'Education';
+  else if(/medic|health|hospital|surgery|doctor|treatment|disease|ill|clinic/i.test(catScan)) result.category = 'Medical';
+  else if(/mosque|masjid|relig|islamic|quran|madras/i.test(catScan))                  result.category = 'Religious';
+  else result.category = 'Social';
+
+  // Support Type — check explicit field first
+  const supExplicit = extract([
+    /support\s*type\s*[:\-]+\s*(.+)/i,
+    /payment\s*type\s*[:\-]+\s*(.+)/i,
+    /type\s*of\s*support\s*[:\-]+\s*(.+)/i,
+  ]).toLowerCase();
+  const supScan = supExplicit + ' ' + clean.toLowerCase();
+  if(/month/i.test(supScan))            result.supportType = 'Monthly';
+  else if(/annual|year/i.test(supScan)) result.supportType = 'Annual';
+  else                                  result.supportType = 'One-time';
+
+  // Currency
+  result.currency = /qar|qat|riyal|qatar/i.test(clean) ? 'QAR' : 'INR';
+
+  // Amount
+  const amtMatch = clean.match(/(?:amount|fees?|cost|payment|support)\s*[:\-]?\s*(?:inr|qar|rs\.?|₹|﷼)?\s*([\d,]+)/i)
+    || clean.match(/(?:inr|qar|rs\.?|₹|﷼)\s*([\d,]+)/i)
+    || clean.match(/([\d,]+)\s*(?:inr|qar|rs|rupees|riyals?)/i);
+  result.amount = amtMatch ? parseInt(amtMatch[1].replace(/,/g,'')) : 0;
+
+  // Remarks
+  result.remarks = extract([
+    /remarks?\s*[:\-]+\s*(.+)/i,
+    /notes?\s*[:\-]+\s*(.+)/i,
+    /comments?\s*[:\-]+\s*(.+)/i,
+    /approved\s*[:\-]+\s*(.+)/i,
+    /decision\s*[:\-]+\s*(.+)/i,
+  ]);
+
+  return result;
+}
+
+function parseDate(raw){
+  raw = raw.trim();
+  // DD/MM/YYYY or DD-MM-YYYY
+  let m = raw.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
+  if(m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  // YYYY-MM-DD already
+  m = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(m) return raw;
+  // Try native parse
+  try{
+    const d = new Date(raw);
+    if(!isNaN(d)) return d.toISOString().split('T')[0];
+  }catch(e){}
+  return new Date().toISOString().split('T')[0];
+}
 
 // ── Init ──
 async function init(){
+  // Timeout: if Firebase doesn't respond in 8 seconds, show offline mode with seed data
+  const timeout = setTimeout(()=>{
+    if(CASES.length === 0){
+      CASES = JSON.parse(JSON.stringify(SEED));
+      document.getElementById('loading').style.display='none';
+      document.getElementById('errbanner').style.display='block';
+      document.getElementById('err-msg').textContent=
+        '⚠ Could not connect to database. Showing local data. Fix: Go to Firebase Console → Firestore → Rules → set allow read, write: if true → Publish';
+      document.getElementById('ibar').style.display='flex';
+      document.getElementById('sync-info').textContent=`${CASES.length} cases · Offline mode`;
+      renderDash(); renderList();
+    }
+  }, 8000);
+
   try{
+    document.getElementById('load-msg').textContent='Connecting to Firebase…';
     const q=query(collection(db,'cases'),orderBy('dateReported','desc'));
-    onSnapshot(q,async snap=>{
+    onSnapshot(q, async snap=>{
+      clearTimeout(timeout);
       if(snap.empty){
-        document.getElementById('load-msg').textContent='Setting up database…';
+        document.getElementById('load-msg').textContent='First run — loading data…';
         for(const c of SEED) await setDoc(doc(db,'cases',c.id),c);
         return;
       }
       CASES=snap.docs.map(d=>({...d.data(),id:d.id}));
       CASES.sort((a,b)=>b.dateReported.localeCompare(a.dateReported));
       document.getElementById('loading').style.display='none';
+      document.getElementById('errbanner').style.display='none';
       document.getElementById('ibar').style.display='flex';
       document.getElementById('sync-info').textContent=`${CASES.length} cases · Live`;
-      renderDash();renderList();
-    },err=>{
+      renderDash(); renderList();
+    }, err=>{
+      clearTimeout(timeout);
+      console.error('Firestore error:', err.code, err.message);
+      // Still show seed data so app is usable
+      CASES = JSON.parse(JSON.stringify(SEED));
       document.getElementById('loading').style.display='none';
       document.getElementById('errbanner').style.display='block';
-      document.getElementById('err-msg').textContent='Database error: '+err.message;
+      document.getElementById('err-msg').textContent=
+        `Database error (${err.code}): ${err.message} — Fix Firestore Rules in Firebase Console`;
+      document.getElementById('ibar').style.display='flex';
+      document.getElementById('sync-info').textContent=`${CASES.length} cases · Offline`;
+      renderDash(); renderList();
     });
   } catch(e){
+    clearTimeout(timeout);
+    console.error('Init error:', e);
+    CASES = JSON.parse(JSON.stringify(SEED));
     document.getElementById('loading').style.display='none';
     document.getElementById('errbanner').style.display='block';
     document.getElementById('err-msg').textContent='Connection failed: '+e.message;
+    document.getElementById('ibar').style.display='flex';
+    document.getElementById('sync-info').textContent=`${CASES.length} cases · Offline`;
+    renderDash(); renderList();
   }
 }
 init();
