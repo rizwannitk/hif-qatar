@@ -17,7 +17,7 @@ header{background:#1E3A5F;position:sticky;top:0;z-index:100;box-shadow:0 2px 12p
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
 .lm{width:34px;height:34px;background:linear-gradient(135deg,#10B981,#059669);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 nav{display:flex;align-items:center;gap:4px;}
-.nb{background:transparent;border:none;color:rgba(255,255,255,.65);padding:8px 14px;border-radius:6px;font-size:14px;}
+.nb{background:transparent;border:none;color:rgba(255,255,255,.65);padding:8px 14px;border-radius:6px;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;}
 .nb.on{background:rgba(255,255,255,.15);color:#fff;font-weight:700;}
 .btn-green{background:#10B981;border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;margin-left:6px;}
 .mob-btn{display:none;background:none;border:none;color:#fff;font-size:24px;padding:4px 8px;}
@@ -147,6 +147,7 @@ tr:nth-child(even) td{background:#F9FAFB;}
       </div>
     </div>
     <nav>
+      <a class="nb" href="https://web-production-da4ea.up.railway.app">🏠 Home</a>
       <button class="nb on" id="n-dash" onclick="go('dash')">Dashboard</button>
       <button class="nb" id="n-list" onclick="go('list')">All Cases</button>
       <button class="btn-green" onclick="openNew()">+ New Case</button>
@@ -154,6 +155,7 @@ tr:nth-child(even) td{background:#F9FAFB;}
     <button class="mob-btn" onclick="toggleMenu()" id="mbtn">☰</button>
   </div>
   <div class="mob-menu" id="mmenu">
+    <a href="https://web-production-da4ea.up.railway.app" style="display:block;width:100%;text-align:left;background:none;border:none;color:#fff;padding:13px 20px;font-size:15px;text-decoration:none;box-sizing:border-box;">🏠  Home</a>
     <button onclick="go('dash');closeMenu()">🏠  Dashboard</button>
     <button onclick="go('list');closeMenu()">📋  All Cases</button>
     <button class="mob-new" onclick="openNew();closeMenu()">+ New Case</button>
